@@ -1,0 +1,82 @@
+package Repository;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+
+import Interfaces.IEstudiante_Carrera;
+import entidades.Carrera;
+import entidades.Estudiante;
+import entidades.Estudiante_Carrera;
+
+public class Estudiante_CarreraRepository implements IEstudiante_Carrera{
+
+    private EntityManager em;
+
+    @Override
+    public void saveEstudianteCarrera(Estudiante_Carrera e) {
+        if (e.getId() == null) {
+			em.persist(e);
+		} else {
+			e = em.merge(e);
+		}	
+    }
+
+    @Override
+    public void insertarEstudianteCarrera(CSVParser estudiantesCarreras) {   
+        for(CSVRecord row: estudiantesCarreras) {
+            try {  
+                em.getTransaction().begin();
+                Long nroDni = Long.parseLong(row.get("estudiante"));
+                Estudiante e=em.find(Estudiante.class,nroDni);
+                Long idCarrera= Long.parseLong(row.get("carrera"));
+                Carrera c= em.find(Carrera.class, idCarrera);
+                Estudiante_Carrera ec = new Estudiante_Carrera(e, c);
+                this.saveEstudianteCarrera(ec);
+                em.getTransaction().commit();
+        
+            } catch (Exception exc) {
+                exc.printStackTrace();
+            }
+        }	
+    }   
+
+    public Estudiante_CarreraRepository() {
+    }
+
+    public Estudiante_CarreraRepository(EntityManager em) {
+        super();
+        this.em=em;
+    }
+
+    @Override
+    public List<Carrera> getCarrerasByInscriptos() {
+        List<Carrera> result;
+        String jpql = "SELECT COUNT(ec.estudiante)"
+                + "FROM Carrera c JOIN c.estudiantes ec WHERE ec.carrera.idCarrera=c.idCarrera AND C.estudiantes IS NOT EMPTY  GROUP BY ec.carrera.idCarrera";
+
+
+        em.getTransaction().begin();
+        try {
+            TypedQuery<Carrera> query = em.createQuery(jpql, Carrera.class);
+            result = query.getResultList() ;
+        } catch (Exception e) {
+            System.out.println(e);
+            result = null;
+        }
+        em.getTransaction().commit();
+
+        return result;
+    }
+
+    @Override
+    public ArrayList<Estudiante> getEstudiantesByCarrera(Carrera c, String ciudad) {
+        return null;
+    }
+    
+}
