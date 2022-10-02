@@ -1,32 +1,43 @@
 package dto;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import entidades.Carrera;
 
 public class DTOReporte {
 
-    private Carrera c;
-    private Date fechaInscripcion;
-    private Date fechaGraduacion;
+    private String c;
+    private Timestamp fecha;
+    private Integer inscriptos;
+    private Integer graduados;
 
     public DTOReporte() {
     }
 
-    public DTOReporte(Carrera c, Date fechaInscripcion, Date fechaGraduacion) {
-        this.c = c;
-        this.fechaInscripcion = fechaInscripcion;
-        this.fechaGraduacion = fechaGraduacion;
+    public DTOReporte(String o, Timestamp fechaInscripcion, Integer inscriptos, Integer graduados) {
+        this.c = o;
+        this.fecha = fechaInscripcion;
+        this.inscriptos=inscriptos;
+        this.graduados=graduados;
     }
-    public Carrera getC() {
+    public String getC() {
         return c;
     }
-    public Date getFechaInscripcion() {
-        return fechaInscripcion;
+
+    public Timestamp getFecha() {
+        return fecha;
     }
-    public Date getFechaGraduacion() {
-        return fechaGraduacion;
+
+    public Integer getInscriptos() {
+        return inscriptos;
     }
+
+    public Integer getGraduados() {
+        return graduados;
+    }
+   
+
     
 
     

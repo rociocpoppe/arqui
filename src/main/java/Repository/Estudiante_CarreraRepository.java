@@ -1,6 +1,10 @@
 package Repository;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -37,7 +41,15 @@ public class Estudiante_CarreraRepository implements IEstudiante_Carrera{
                 Estudiante e=em.find(Estudiante.class,nroDni);
                 Long idCarrera= Long.parseLong(row.get("carrera"));
                 Carrera c= em.find(Carrera.class, idCarrera);
-                Estudiante_Carrera ec = new Estudiante_Carrera(e, c);
+                String dato=row.get("fechaInscripcion");
+                System.out.println(dato);
+                Timestamp inscripcion = Timestamp.valueOf(row.get("fechaInscripcion"));
+                Timestamp graduacion = null;
+                if(!row.get("fechaGraduacion").equals("NULL")) {
+                    graduacion = Timestamp.valueOf(row.get("fechaGraduacion"));
+                }
+                
+                Estudiante_Carrera ec = new Estudiante_Carrera(e,c, inscripcion, graduacion);
                 this.saveEstudianteCarrera(ec);
                 em.getTransaction().commit();
         

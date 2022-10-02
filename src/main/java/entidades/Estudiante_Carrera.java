@@ -1,6 +1,8 @@
 package entidades;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import javax.persistence.*;
 
@@ -21,9 +23,9 @@ public class Estudiante_Carrera{
     private Carrera carrera;
     
     @Column
-	private Date fechaInscripcion;
+	private Timestamp fechaInscripcion;
 	@Column
-	private Date fechaGraduacion;
+	private Timestamp fechaGraduacion;
 
     private int antiguedad;
 
@@ -31,11 +33,22 @@ public class Estudiante_Carrera{
 		super();
 	}
 
+    
 
     
     public Estudiante_Carrera(Estudiante estudiante, Carrera carrera) {
         this.estudiante = estudiante;
         this.carrera = carrera;
+    }
+
+
+
+
+    public Estudiante_Carrera(Estudiante estudiante, Carrera carrera, Timestamp inscripcion, Timestamp graduacion) {
+        this.estudiante = estudiante;
+        this.carrera = carrera;
+        this.fechaInscripcion=inscripcion;
+        this.fechaGraduacion=graduacion;
     }
 
 
@@ -60,19 +73,19 @@ public class Estudiante_Carrera{
         this.carrera = carrera;
     }
 
-    public Date getFechaInscripcion() {
+    public Timestamp getFechaInscripcion() {
         return fechaInscripcion;
     }
 
-    public void setFechaInscripcion(Date fechaInscripcion) {
+    public void setFechaInscripcion(Timestamp fechaInscripcion) {
         this.fechaInscripcion = fechaInscripcion;
     }
 
-    public Date getFechaGraduacion() {
+    public Timestamp getFechaGraduacion() {
         return fechaGraduacion;
     }
 
-    public void setFechaGraduacion(Date fechaGraduacion) {
+    public void setFechaGraduacion(Timestamp fechaGraduacion) {
         this.fechaGraduacion = fechaGraduacion;
     }
 

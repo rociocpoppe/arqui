@@ -3,6 +3,7 @@ package org.example;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -10,6 +11,7 @@ import org.apache.commons.csv.CSVParser;
 import Repository.CarreraRepository;
 import Repository.EstudianteRepository;
 import Repository.Estudiante_CarreraRepository;
+import dto.DTOReporte;
 import entidades.Carrera;
 import entidades.Estudiante;
 import factory.FactoryRepository;
@@ -35,7 +37,7 @@ public class Main {
             // cargar datos 
             // carreraRepository.insertCarrera(parserCarreras);
             // estudianteRepository.insertarEstudiante(parserEstudiante);
-            // estudiante_carreraRepository.insertarEstudianteCarrera(parserEstudianteCarrera);
+            //estudiante_carreraRepository.insertarEstudianteCarrera(parserEstudianteCarrera);
             
             //CONSULTA A
             // Estudiante est=new Estudiante((long)40, "Juan", "Rodriguez", "Las Flores", 29, "m", 1900);
@@ -105,7 +107,10 @@ public class Main {
 
             //REPORTE 
 
-            
+           List <Object> reporte= carreraRepository.getReporte();
+           for(Object r: reporte){
+            System.out.println(r);
+           }
 
 
            

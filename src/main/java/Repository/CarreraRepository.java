@@ -1,7 +1,10 @@
 package Repository;
 
+import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -91,5 +94,21 @@ public class CarreraRepository implements ICarrera{
 		return carreras;
     }
 
+   @SuppressWarnings("unchecked")
+	public List<Object> getReporte( ) {
+        em.getTransaction().begin();
+		Query query = em.createNativeQuery("select nombre, anio, sum(inscriptos) as inscriptos,"
+                                    +  " sum(graduados) as graduados from"
+                                    +  " (SELECT c.nombre, fechaInscripcion as anio, count(estudianteId) as inscriptos,"
+                                    +  " '0' as graduados from Carrera c inner join  Estudiante_Carrera ec "
+                                    +  " on carreraId= c.idCarrera group by carreraId,anio union"
+                                    +  "SELECT c.nombre, fechaGraduacion as anio,  '0' as inscriptos, count(estudianteId) as graduados"
+                                    + " from Carrera c inner join  Estudiante_Carrera ec on carreraId= c.idCarrera "
+                                    + " where fechaGraduacion is not null group by carreraId,anio order by nombre,anio) a group by nombre, anio");
+                              
+        //List<DTOReporte> reports = query.stream().map(o -> new DTOReporte((String)o[0], (Timestamp)o[1], (Integer)o[2], (Integer)o[3])).collect(Collectors.toList());
+        em.getTransaction().commit();
+        return query.getResultList(); 
+	}
 
 }
