@@ -1,6 +1,7 @@
 package Interfaces;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.csv.CSVParser;
 
@@ -16,7 +17,7 @@ public interface IEstudiante{
     public void deleteEstudiante(Estudiante e);
     //el get se podria hacer en uno solo
     // public ArrayList<Estudiante> getEstudiantesByCriterio(String dato);
-    public Estudiante getEstudianteByLU(String lu);
-    public ArrayList<Estudiante> getEstudiantesByGenero(String dato);
+
+    public List<Estudiante> getEstudiantesByGenero(String dato);
     public Estudiante getEstudianteByLU(int nroLibretaUniv);
 }

@@ -9,11 +9,10 @@ import entidades.Estudiante;
 
 public interface ICarrera{
 
-    public List<Carrera> getCarreras();
+    public Carrera getCarreraById(int id);
     public void insertCarrera(CSVParser c);
     public void saveCarrera(Carrera c);
     public void deleteCarrera(Carrera c);
-    public void matricularEstudiante(Estudiante e);
     public Carrera findCarrera(Long id);
 
 }

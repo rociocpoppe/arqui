@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.apache.commons.csv.CSVParser;
@@ -58,7 +59,9 @@ public class Estudiante_CarreraRepository implements IEstudiante_Carrera{
     public List<Carrera> getCarrerasByInscriptos() {
         List<Carrera> result;
         String jpql = "SELECT COUNT(ec.estudiante)"
-                + "FROM Carrera c JOIN c.estudiantes ec WHERE ec.carrera.idCarrera=c.idCarrera AND C.estudiantes IS NOT EMPTY  GROUP BY ec.carrera.idCarrera";
+                + "FROM Carrera c JOIN c.estudiantes ec "
+                + "WHERE ec.carrera.idCarrera=c.idCarrera AND C.estudiantes IS NOT EMPTY"
+                +  "GROUP BY ec.carrera.idCarrera";
 
 
         em.getTransaction().begin();
@@ -78,5 +81,21 @@ public class Estudiante_CarreraRepository implements IEstudiante_Carrera{
     public ArrayList<Estudiante> getEstudiantesByCarrera(Carrera c, String ciudad) {
         return null;
     }
+
+    public void matricularEstudiante(Estudiante estudiante, Carrera carrera){
+        // estudiante.addCarrera(carrera);
+        // carrera.addEstudiante(estudiante);
+        em.getTransaction().begin();
+        String q=" INSERT INTO Estudiante_Carrera (antiguedad, fechaGraduacion, fechaInscripcion, carreraId, estudianteId) VALUES (?,?,?,?,?)";
+        Query query= em.createNativeQuery(q);
+        query.setParameter(1,0);
+        query.setParameter(2,null);
+        query.setParameter(3,null);
+        query.setParameter(5,estudiante.getNroDni());
+        query.setParameter(4,carrera.getIdCarrera());
+        query.executeUpdate();
+        em.getTransaction().commit(); 
+    }
     
+
 }

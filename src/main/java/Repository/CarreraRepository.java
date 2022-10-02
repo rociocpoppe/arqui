@@ -10,8 +10,10 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import Interfaces.*;
+import dto.DTOReporte;
 import entidades.Carrera;
 import entidades.Estudiante;
+import scala.unchecked;
 import scala.annotation.compileTimeOnly;
 
 public class CarreraRepository implements ICarrera{
@@ -26,44 +28,11 @@ public class CarreraRepository implements ICarrera{
         this.em = em;
 	}
 
+ 
     @Override
-    public void matricularEstudiante(Estudiante e) {
-           //?   
-    }
-
-    @Override
-    public List<Carrera> getCarreras() {
-        em.getTransaction().begin();
-        String jpql= ("SELECT c FROM carrera c");
-        Query query=em.createQuery(jpql);
-        return query.getResultList();
+    public Carrera getCarreraById(int id) {
+        return findCarrera((long)id);
         
-    }
-
-    @Override
-    public void saveCarrera(Carrera c) {
-        if (c.getIdCarrera() == null) {
-			em.persist(c);
-		} else {
-			c = em.merge(c);
-		}	
-    }
-
-    @Override
-    public void deleteCarrera(Carrera c) {
-        System.out.println("delete " + c);
-        if (em.contains(c)) {
-            System.out.println("delete " + c);
-			em.remove(c);
-            System.out.println("delete " + c);
-		} else {
-			em.merge(c);
-		}
-    }
-
-    @Override
-    public Carrera findCarrera(Long id) { 
-        return em.find(Carrera.class, id);
     }
 
     @Override
@@ -86,23 +55,41 @@ public class CarreraRepository implements ICarrera{
      
     }
 
+    @Override
+    public void saveCarrera(Carrera c) {
+        if (c.getIdCarrera() == null) {
+			em.persist(c);
+		} else {
+			c = em.merge(c);
+		}	
+    }
 
-    public List<Carrera> getCarreraByEstudiante(){
-        List<Carrera>carreras=new ArrayList<Carrera>();
+    @Override
+    public void deleteCarrera(Carrera c) {
+        if (em.contains(c)) {
+			em.remove(c);
+		} else {
+			em.merge(c);
+		}
+    }
+
+    @Override
+    public Carrera findCarrera(Long id) { 
+        return em.find(Carrera.class, id);
+    }
+
+    public List<Carrera> getCarreraXEstudiantesInscriptos(){
         em.getTransaction().begin();
-        String query="SELECT c.nombre,count(ec) as contador FROM Carrera c  "
-        + "JOIN c.estudiantes ec "
+        Query q = em.createQuery("SELECT c.nombre,count(e) as contador FROM Carrera c "
+        + "JOIN c.estudiantes e "
         + "WHERE c.estudiantes IS NOT EMPTY "
         + "GROUP BY c.nombre "
-        + "ORDER BY contador DESC";
-        try{
-            carreras = em.createQuery(query).getResultList();
-            em.getTransaction().commit();
-        }catch (Exception e){
-            System.out.println(e);
-        }
-
-        return carreras;
+        + "ORDER BY contador DESC");
+        @SuppressWarnings("unchecked")
+        List<Carrera> carreras=q.getResultList();
+        em.getTransaction().commit(); 
+		return carreras;
     }
-    
+
+
 }

@@ -1,11 +1,14 @@
 package Repository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Interfaces.IEstudiante;
+import entidades.Carrera;
 import entidades.Estudiante;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.apache.commons.csv.CSVParser;
@@ -37,9 +40,9 @@ public class EstudianteRepository implements IEstudiante{
             int nroLibreta = Integer.parseInt((row.get("nroLibretaUniv")));
             Estudiante e = new Estudiante(dni, nombre, apellido,ciudadResidencia,edad, genero, nroLibreta);
             try {
-                em.getTransaction().begin();
+                // em.getTransaction().begin();
                 saveEstudiante(e);
-                em.getTransaction().commit();
+                // em.getTransaction().commit();
                 inserted = true;
             } catch (Exception ex) {
                 em.getTransaction().rollback();
@@ -54,11 +57,13 @@ public class EstudianteRepository implements IEstudiante{
 
     @Override
     public void saveEstudiante(Estudiante est) {
+        em.getTransaction().begin();
         if (est.getNroDni()== null) {
             em.persist(est);
         } else {
             est = em.merge(est);
         }
+        em.getTransaction().commit();
     }
 
     @Override
@@ -75,14 +80,15 @@ public class EstudianteRepository implements IEstudiante{
     //     return null;
     // }
 
+  
     @Override
-    public Estudiante getEstudianteByLU(String lu) {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Estudiante> getEstudiantesByGenero(String dato) {
-        return null;
+    public List<Estudiante> getEstudiantesByGenero(String genero){
+        String q="SELECT e FROM Estudiante e WHERE e.genero=:genero";
+        Query query=em.createQuery(q);
+        query.setParameter("genero", genero);
+        @SuppressWarnings("unchecked")
+        List<Estudiante> estudiantesXGenero=query.getResultList();
+        return estudiantesXGenero;
     }
     
 
@@ -99,17 +105,42 @@ public class EstudianteRepository implements IEstudiante{
     @Override
     public Estudiante getEstudianteByLU(int nroLibretaUniv) {
        Estudiante estudiante;
-       String jpql = "SELECT e "
-               +"FROM Estudiante e WHERE e.nroLibretaUniv = ?1";
-
+       String jpql = "SELECT e FROM Estudiante e WHERE e.nroLibretaUniv = :lu";
         try {
             TypedQuery<Estudiante> query = em.createQuery(jpql, Estudiante.class);
-            query.setParameter(1, nroLibretaUniv);
+            query.setParameter("lu", nroLibretaUniv);
             estudiante = query.getSingleResult();
         } catch (Exception e) {
             estudiante = null;
             System.out.println(e);
         }
        return estudiante;
+    }
+
+
+    public List <Estudiante> getEstudiantesByCarrera(Carrera c, String ciudad){
+        em.getTransaction().begin();
+        String q="SELECT e FROM Estudiante e"
+                +" JOIN e.carreras c"
+                +" WHERE e.ciudadResidencia=:ciudad AND carreraId=:carreraId"
+                +" ORDER BY e.ciudadResidencia";
+        Query query=em.createQuery(q);
+        query.setParameter("ciudad", ciudad);
+        query.setParameter("carreraId", c.getIdCarrera());
+        @SuppressWarnings("unchecked")
+        List<Estudiante> estudiantesXCarrera=query.getResultList();
+        em.getTransaction().commit(); 
+		return estudiantesXCarrera;
+
+    }
+
+    public List<Estudiante> getEstudiantesByCriterio(String dato) {
+        em.getTransaction().begin();
+        String jpql = "SELECT e FROM Estudiante e ORDER BY e."+dato;
+        Query query=em.createQuery(jpql);
+        @SuppressWarnings("unchecked")
+        List<Estudiante> estudiantesOrderCriterio=query.getResultList();
+        em.getTransaction().commit();
+        return estudiantesOrderCriterio;
     }
 }

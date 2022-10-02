@@ -5,20 +5,19 @@ import java.sql.Date;
 import javax.persistence.*;
 
 @Entity
-@Table (name="EstudianteCarrera")
+@Table (name="Estudiante_Carrera")
 public class Estudiante_Carrera{
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id ;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn (name="fk_estudiante")
+    @JoinColumn (name="estudianteId")
     private Estudiante estudiante;
 
     @ManyToOne (cascade= CascadeType.MERGE)
-    @JoinColumn (name="fk_carrera")
+    @JoinColumn (name="carreraId")
     private Carrera carrera;
     
     @Column

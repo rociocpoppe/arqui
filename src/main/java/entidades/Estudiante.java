@@ -1,6 +1,7 @@
 package entidades;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -17,7 +18,7 @@ import javax.persistence.Table;
 public class Estudiante{
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    // @GeneratedValue(strategy=GenerationType.AUTO)
     private Long nroDni;
     @Column
     private String nombre;
@@ -31,8 +32,8 @@ public class Estudiante{
     private String ciudadResidencia;
     @Column
     private int nroLibretaUniv;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "estudiante")
-    private Set <Estudiante_Carrera> carreras;
+    @OneToMany( mappedBy = "estudiante",fetch = FetchType.LAZY)
+    private List <Estudiante_Carrera> carreras;
     
 
     
@@ -45,6 +46,7 @@ public class Estudiante{
         this.genero = genero;
         this.ciudadResidencia = ciudadResidencia;
         this.nroLibretaUniv = nroLibretaUniv;
+        this.carreras=new ArrayList<Estudiante_Carrera>();
     }
 
     public Estudiante(Long nroDni, String nombre, String apellido, int nroLibretaUniv) {
@@ -116,16 +118,20 @@ public class Estudiante{
         return new ArrayList<>(carreras);
     }
 
-    public void addCarrera(Estudiante_Carrera carrera) {
-        this.carreras.add(carrera);
+    public void addCarrera(Carrera carrera) {
+        Estudiante_Carrera cs = new Estudiante_Carrera(this, carrera);
+        carreras.add(cs);
+        carrera.getEstudiantes().add(cs);
     }
 
     @Override
     public String toString() {
-        return "Estudiante [apellido=" + apellido + ", carreras=" + carreras + ", ciudadResidencia=" + ciudadResidencia
+        return "Estudiante [apellido=" + apellido + ", ciudadResidencia=" + ciudadResidencia
                 + ", edad=" + edad + ", genero=" + genero + ", nombre=" + nombre + ", nroDni=" + nroDni
                 + ", nroLibretaUniv=" + nroLibretaUniv + "]";
     }
+
+   
 
 
     
