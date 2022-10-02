@@ -107,10 +107,15 @@ public class Main {
 
             //REPORTE 
 
-           List <Object> reporte= carreraRepository.getReporte();
-           for(Object r: reporte){
-            System.out.println(r);
-           }
+            List d = carreraRepository.getReporte();
+            for(Object o : d) {
+                Object[] y = (Object[])o;
+                System.out.printf("%s %s %d %d\n", y[0], y[1],y[2],y[3]);
+            }
+      
+
+       
+				
 
 
            

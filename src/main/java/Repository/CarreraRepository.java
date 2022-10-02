@@ -102,11 +102,12 @@ public class CarreraRepository implements ICarrera{
                                     +  " (SELECT c.nombre, fechaInscripcion as anio, count(estudianteId) as inscriptos,"
                                     +  " '0' as graduados from Carrera c inner join  Estudiante_Carrera ec "
                                     +  " on carreraId= c.idCarrera group by carreraId,anio union"
-                                    +  "SELECT c.nombre, fechaGraduacion as anio,  '0' as inscriptos, count(estudianteId) as graduados"
+                                    +  " SELECT c.nombre, fechaGraduacion as anio,  '0' as inscriptos, count(estudianteId) as graduados"
                                     + " from Carrera c inner join  Estudiante_Carrera ec on carreraId= c.idCarrera "
                                     + " where fechaGraduacion is not null group by carreraId,anio order by nombre,anio) a group by nombre, anio");
                               
         //List<DTOReporte> reports = query.stream().map(o -> new DTOReporte((String)o[0], (Timestamp)o[1], (Integer)o[2], (Integer)o[3])).collect(Collectors.toList());
+        List resultado=query.getResultList(); 
         em.getTransaction().commit();
         return query.getResultList(); 
 	}
