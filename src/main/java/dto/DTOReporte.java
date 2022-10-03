@@ -1,21 +1,22 @@
 package dto;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 
 import entidades.Carrera;
 
-public class DTOReporte {
+public class DTOReporte implements Serializable{
 
     private String c;
     private Timestamp fecha;
-    private Integer inscriptos;
-    private Integer graduados;
+    private int inscriptos;
+    private int graduados;
 
     public DTOReporte() {
     }
 
-    public DTOReporte(String o, Timestamp fechaInscripcion, Integer inscriptos, Integer graduados) {
+    public DTOReporte(String o, Timestamp fechaInscripcion, int inscriptos, int graduados) {
         this.c = o;
         this.fecha = fechaInscripcion;
         this.inscriptos=inscriptos;
@@ -29,12 +30,35 @@ public class DTOReporte {
         return fecha;
     }
 
-    public Integer getInscriptos() {
+    public int getInscriptos() {
         return inscriptos;
     }
 
-    public Integer getGraduados() {
+    public int getGraduados() {
         return graduados;
+    }
+
+    
+    public void setC(String c) {
+        this.c = c;
+    }
+
+    public void setFecha(Timestamp fecha) {
+        this.fecha = fecha;
+    }
+
+    public void setInscriptos(int inscriptos) {
+        this.inscriptos = inscriptos;
+    }
+
+    public void setGraduados(int graduados) {
+        this.graduados = graduados;
+    }
+
+    @Override
+    public String toString() {
+        return "DTOReporte [Carrera=" + c + ", fecha=" + fecha + ", inscriptos=" + inscriptos + ", graduados=" + graduados
+                + "]";
     }
    
 

@@ -14,9 +14,6 @@ public interface IEstudiante_Carrera {
 
     public void insertarEstudianteCarrera(CSVParser c);
     public void saveEstudianteCarrera(Estudiante_Carrera e);
-    //ordenado por cantidad de inscriptos
     public List<Carrera> getCarrerasByInscriptos ();
-
-    //recuperar estudiantes de una determinada carrera, filtrado por ciudad de residencia
-    public ArrayList<Estudiante> getEstudiantesByCarrera (Carrera c, String ciudad);
+    public void matricularEstudiante(Estudiante e, Carrera c);
 }

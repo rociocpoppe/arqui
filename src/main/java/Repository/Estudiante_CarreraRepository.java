@@ -23,6 +23,14 @@ public class Estudiante_CarreraRepository implements IEstudiante_Carrera{
 
     private EntityManager em;
 
+    public Estudiante_CarreraRepository() {
+    }
+
+    public Estudiante_CarreraRepository(EntityManager em) {
+        super();
+        this.em=em;
+    }
+    
     @Override
     public void saveEstudianteCarrera(Estudiante_Carrera e) {
         if (e.getId() == null) {
@@ -59,13 +67,6 @@ public class Estudiante_CarreraRepository implements IEstudiante_Carrera{
         }	
     }   
 
-    public Estudiante_CarreraRepository() {
-    }
-
-    public Estudiante_CarreraRepository(EntityManager em) {
-        super();
-        this.em=em;
-    }
 
     @Override
     public List<Carrera> getCarrerasByInscriptos() {
@@ -90,10 +91,6 @@ public class Estudiante_CarreraRepository implements IEstudiante_Carrera{
     }
 
     @Override
-    public ArrayList<Estudiante> getEstudiantesByCarrera(Carrera c, String ciudad) {
-        return null;
-    }
-
     public void matricularEstudiante(Estudiante estudiante, Carrera carrera){
         // estudiante.addCarrera(carrera);
         // carrera.addEstudiante(estudiante);

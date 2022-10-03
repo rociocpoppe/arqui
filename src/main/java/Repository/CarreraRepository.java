@@ -95,9 +95,9 @@ public class CarreraRepository implements ICarrera{
     }
 
    @SuppressWarnings("unchecked")
-	public List<Object> getReporte( ) {
+	public List<Object> getReporte() {
         em.getTransaction().begin();
-		Query query = em.createNativeQuery("select nombre, anio, sum(inscriptos) as inscriptos,"
+		Query query = em.createNativeQuery("select nombre,YEAR(anio), sum(inscriptos) as inscriptos,"
                                     +  " sum(graduados) as graduados from"
                                     +  " (SELECT c.nombre, fechaInscripcion as anio, count(estudianteId) as inscriptos,"
                                     +  " '0' as graduados from Carrera c inner join  Estudiante_Carrera ec "
@@ -107,7 +107,7 @@ public class CarreraRepository implements ICarrera{
                                     + " where fechaGraduacion is not null group by carreraId,anio order by nombre,anio) a group by nombre, anio");
                               
         //List<DTOReporte> reports = query.stream().map(o -> new DTOReporte((String)o[0], (Timestamp)o[1], (Integer)o[2], (Integer)o[3])).collect(Collectors.toList());
-        List resultado=query.getResultList(); 
+        List<Object> resultado=new ArrayList<>(query.getResultList()); 
         em.getTransaction().commit();
         return query.getResultList(); 
 	}

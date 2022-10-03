@@ -37,11 +37,12 @@ public class Main {
             // cargar datos 
             // carreraRepository.insertCarrera(parserCarreras);
             // estudianteRepository.insertarEstudiante(parserEstudiante);
-            //estudiante_carreraRepository.insertarEstudianteCarrera(parserEstudianteCarrera);
+            // estudiante_carreraRepository.insertarEstudianteCarrera(parserEstudianteCarrera);
             
             //CONSULTA A
             // Estudiante est=new Estudiante((long)40, "Juan", "Rodriguez", "Las Flores", 29, "m", 1900);
             // estudianteRepository.saveEstudiante(est);
+
             //CONSULTA B
             //matricular estudiante a una carrera
             // Carrera carrera= carreraRepository.getCarreraById(2);
@@ -110,16 +111,17 @@ public class Main {
             List d = carreraRepository.getReporte();
             for(Object o : d) {
                 Object[] y = (Object[])o;
-                System.out.printf("%s %s %d %d\n", y[0], y[1],y[2],y[3]);
+                String carrera=(String) y[0];
+                carrera.toUpperCase();
+                int anio=(int) y[1];
+                double r1=(double)y[2];
+                int inscriptos=(int)r1;
+                double r2= (double)y[3];
+                int graduados=(int)r2;
+                System.out.println(carrera + " año " + anio + " inscriptos "+  inscriptos + " graduados " + graduados);
             }
-      
-
-       
-				
-
-
            
-      
+       
 
 
 

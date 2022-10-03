@@ -75,11 +75,6 @@ public class EstudianteRepository implements IEstudiante{
         }
     }
 
-    // @Override
-    // public ArrayList<Estudiante> getEstudiantesByCriterio(String dato) {
-    //     return null;
-    // }
-
   
     @Override
     public List<Estudiante> getEstudiantesByGenero(String genero){
@@ -97,10 +92,6 @@ public class EstudianteRepository implements IEstudiante{
             return em.find(Estudiante.class, nroDni);
     }
 
-    // @Override
-    // public ArrayList<Estudiante> getEstudiantesByCriterio(String dato) {
-    //     return new Estudiante();
-    // }
 
     @Override
     public Estudiante getEstudianteByLU(int nroLibretaUniv) {
@@ -118,6 +109,7 @@ public class EstudianteRepository implements IEstudiante{
     }
 
 
+    @Override
     public List <Estudiante> getEstudiantesByCarrera(Carrera c, String ciudad){
         em.getTransaction().begin();
         String q="SELECT e FROM Estudiante e"
@@ -134,6 +126,7 @@ public class EstudianteRepository implements IEstudiante{
 
     }
 
+    @Override
     public List<Estudiante> getEstudiantesByCriterio(String dato) {
         em.getTransaction().begin();
         String jpql = "SELECT e FROM Estudiante e ORDER BY e."+dato;
