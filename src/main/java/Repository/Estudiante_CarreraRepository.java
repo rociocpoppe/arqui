@@ -75,7 +75,7 @@ public class Estudiante_CarreraRepository implements IEstudiante_Carrera{
         Query query= em.createNativeQuery(q);
         query.setParameter(1,0);
         query.setParameter(2,null);
-        query.setParameter(3,null);
+        query.setParameter(3,new Date());
         query.setParameter(5,estudiante.getNroDni());
         query.setParameter(4,carrera.getIdCarrera());
         query.executeUpdate();

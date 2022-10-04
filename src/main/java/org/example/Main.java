@@ -48,9 +48,10 @@ public class Main {
             //matricular estudiante a una carrera
             System.out.println(" ");
             System.out.println("************CONSULTA B*******************************************");
-            // Carrera carrera= carreraRepository.getCarreraById(2);
-            // Estudiante estudiante=estudianteRepository.getEstudianteByLU(456);
-            // estudiante_carreraRepository.matricularEstudiante(estudiante, carrera);
+            Carrera carrera= carreraRepository.getCarreraById(2);
+            Estudiante est=estudianteRepository.getEstudianteByLU(456);
+            estudiante_carreraRepository.matricularEstudiante(est, carrera);
+            
 
             //CONSULTA C
             System.out.println(" ");
