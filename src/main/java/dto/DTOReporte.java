@@ -1,22 +1,25 @@
 package dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.Date;
 
 import entidades.Carrera;
+import scala.math.BigInt;
 
 public class DTOReporte implements Serializable{
 
     private String c;
-    private Timestamp fecha;
-    private int inscriptos;
-    private int graduados;
+    private Integer fecha;
+    private double inscriptos;
+    private double graduados;
 
     public DTOReporte() {
     }
 
-    public DTOReporte(String o, Timestamp fechaInscripcion, int inscriptos, int graduados) {
+    public DTOReporte(String o, Integer fechaInscripcion, double inscriptos, double graduados) {
         this.c = o;
         this.fecha = fechaInscripcion;
         this.inscriptos=inscriptos;
@@ -26,15 +29,15 @@ public class DTOReporte implements Serializable{
         return c;
     }
 
-    public Timestamp getFecha() {
+    public Integer getFecha() {
         return fecha;
     }
 
-    public int getInscriptos() {
+    public double getInscriptos() {
         return inscriptos;
     }
 
-    public int getGraduados() {
+    public double getGraduados() {
         return graduados;
     }
 
@@ -43,15 +46,15 @@ public class DTOReporte implements Serializable{
         this.c = c;
     }
 
-    public void setFecha(Timestamp fecha) {
+    public void setFecha(Integer fecha) {
         this.fecha = fecha;
     }
 
-    public void setInscriptos(int inscriptos) {
+    public void setInscriptos(double inscriptos) {
         this.inscriptos = inscriptos;
     }
 
-    public void setGraduados(int graduados) {
+    public void setGraduados(double graduados) {
         this.graduados = graduados;
     }
 
@@ -63,6 +66,6 @@ public class DTOReporte implements Serializable{
    
 
     
-
+    
     
 }

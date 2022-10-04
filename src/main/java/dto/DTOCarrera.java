@@ -1,13 +1,13 @@
 package dto;
 
+import java.math.BigInteger;
+
 public class DTOCarrera {
     
     public String nombre;
     public int cantidadInscriptos;
     
-    public DTOCarrera() {
-    }
-
+   
     public DTOCarrera(String nombre, int cantidadInscriptos) {
         this.nombre = nombre;
         this.cantidadInscriptos = cantidadInscriptos;
