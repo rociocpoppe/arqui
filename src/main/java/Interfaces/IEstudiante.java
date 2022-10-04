@@ -1,10 +1,7 @@
 package Interfaces;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.csv.CSVParser;
-
 import entidades.Carrera;
 import entidades.Estudiante;
 

@@ -1,9 +1,6 @@
 package entidades;
 
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDate;
-
 import javax.persistence.*;
 
 @Entity
@@ -34,14 +31,10 @@ public class Estudiante_Carrera{
 	}
 
     
-
-    
     public Estudiante_Carrera(Estudiante estudiante, Carrera carrera) {
         this.estudiante = estudiante;
         this.carrera = carrera;
     }
-
-
 
 
     public Estudiante_Carrera(Estudiante estudiante, Carrera carrera, Timestamp inscripcion, Timestamp graduacion) {
@@ -50,7 +43,6 @@ public class Estudiante_Carrera{
         this.fechaInscripcion=inscripcion;
         this.fechaGraduacion=graduacion;
     }
-
 
 
     public Long getId() {

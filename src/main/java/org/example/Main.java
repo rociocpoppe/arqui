@@ -121,7 +121,7 @@ public class Main {
             //REPORTE 
             System.out.println(" ");
             System.out.println("************REPORTE *******************************************");
-            List<Object[]> carrerasReporte=carreraRepository.getReporte();
+            List<Object[]> carrerasReporte=estudiante_carreraRepository.getReporte();
             for(Object carr: carrerasReporte){
                 Object[] y=(Object[])carr;
                 String c=(String) y[0];

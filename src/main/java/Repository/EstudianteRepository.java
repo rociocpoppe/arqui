@@ -1,16 +1,13 @@
 package Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import Interfaces.IEstudiante;
 import entidades.Carrera;
 import entidades.Estudiante;
-
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
@@ -40,16 +37,13 @@ public class EstudianteRepository implements IEstudiante{
             int nroLibreta = Integer.parseInt((row.get("nroLibretaUniv")));
             Estudiante e = new Estudiante(dni, nombre, apellido,ciudadResidencia,edad, genero, nroLibreta);
             try {
-                // em.getTransaction().begin();
                 saveEstudiante(e);
-                // em.getTransaction().commit();
                 inserted = true;
             } catch (Exception ex) {
                 em.getTransaction().rollback();
                 System.out.println("exception  = " + ex);
                 inserted = false;
             }
-
         }
         return inserted;
     }
@@ -92,7 +86,6 @@ public class EstudianteRepository implements IEstudiante{
             return em.find(Estudiante.class, nroDni);
     }
 
-
     @Override
     public Estudiante getEstudianteByLU(int nroLibretaUniv) {
        Estudiante estudiante;
@@ -107,7 +100,6 @@ public class EstudianteRepository implements IEstudiante{
         }
        return estudiante;
     }
-
 
     @Override
     public List <Estudiante> getEstudiantesByCarrera(Carrera c, String ciudad){

@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -15,6 +16,7 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import Interfaces.IEstudiante_Carrera;
+import dto.DTOReporte;
 import entidades.Carrera;
 import entidades.Estudiante;
 import entidades.Estudiante_Carrera;
@@ -55,12 +57,10 @@ public class Estudiante_CarreraRepository implements IEstudiante_Carrera{
                 Timestamp graduacion = null;
                 if(!row.get("fechaGraduacion").equals("NULL")) {
                     graduacion = Timestamp.valueOf(row.get("fechaGraduacion"));
-                }
-                
+                }              
                 Estudiante_Carrera ec = new Estudiante_Carrera(e,c, inscripcion, graduacion);
                 this.saveEstudianteCarrera(ec);
-                em.getTransaction().commit();
-        
+                em.getTransaction().commit(); 
             } catch (Exception exc) {
                 exc.printStackTrace();
             }
@@ -69,31 +69,7 @@ public class Estudiante_CarreraRepository implements IEstudiante_Carrera{
 
 
     @Override
-    public List<Carrera> getCarrerasByInscriptos() {
-        List<Carrera> result;
-        String jpql = "SELECT COUNT(ec.estudiante)"
-                + "FROM Carrera c JOIN c.estudiantes ec "
-                + "WHERE ec.carrera.idCarrera=c.idCarrera AND C.estudiantes IS NOT EMPTY"
-                +  "GROUP BY ec.carrera.idCarrera";
-
-
-        em.getTransaction().begin();
-        try {
-            TypedQuery<Carrera> query = em.createQuery(jpql, Carrera.class);
-            result = query.getResultList() ;
-        } catch (Exception e) {
-            System.out.println(e);
-            result = null;
-        }
-        em.getTransaction().commit();
-
-        return result;
-    }
-
-    @Override
     public void matricularEstudiante(Estudiante estudiante, Carrera carrera){
-        // estudiante.addCarrera(carrera);
-        // carrera.addEstudiante(estudiante);
         em.getTransaction().begin();
         String q=" INSERT INTO Estudiante_Carrera (antiguedad, fechaGraduacion, fechaInscripcion, carreraId, estudianteId) VALUES (?,?,?,?,?)";
         Query query= em.createNativeQuery(q);
@@ -106,5 +82,23 @@ public class Estudiante_CarreraRepository implements IEstudiante_Carrera{
         em.getTransaction().commit(); 
     }
     
+    @SuppressWarnings("unchecked")
+	public List<Object[]> getReporte() {
+        em.getTransaction().begin();
+        String q="select nombre,YEAR(anio), sum(inscriptos) as inscriptos,"
+        +  " sum(graduados) as graduados from"
+        +  " (SELECT c.nombre, fechaInscripcion as anio, count(estudianteId) as inscriptos,"
+        +  " '0' as graduados from Carrera c inner join  Estudiante_Carrera ec "
+        +  " on carreraId= c.idCarrera group by carreraId,anio union"
+        +  " SELECT c.nombre, fechaGraduacion as anio,  '0' as inscriptos, count(estudianteId) as graduados"
+        + " from Carrera c inner join  Estudiante_Carrera ec on carreraId= c.idCarrera "
+        + " where fechaGraduacion is not null group by carreraId,anio order by nombre,anio) a group by nombre, anio";
+		Query query = em.createNativeQuery(q);
+        List <Object[]> auxReport = query.getResultList();
+        auxReport.stream().map(r-> new DTOReporte((String) r[0],(Integer) r[1],(double) r[2],(double) r[3])).collect(Collectors.toList());
+        em.getTransaction().commit();
+        return auxReport; 
+	}
+
 
 }

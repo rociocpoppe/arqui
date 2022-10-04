@@ -1,8 +1,5 @@
 package factory;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityManager;
-
 import Repository.CarreraRepository;
 import Repository.EstudianteRepository;
 import Repository.Estudiante_CarreraRepository;

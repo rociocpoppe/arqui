@@ -1,13 +1,6 @@
 package dto;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.sql.Timestamp;
-import java.util.Date;
-
-import entidades.Carrera;
-import scala.math.BigInt;
 
 public class DTOReporte implements Serializable{
 
@@ -63,9 +56,5 @@ public class DTOReporte implements Serializable{
         return "DTOReporte [Carrera=" + c + ", fecha=" + fecha + ", inscriptos=" + inscriptos + ", graduados=" + graduados
                 + "]";
     }
-   
-
-    
-    
-    
+ 
 }

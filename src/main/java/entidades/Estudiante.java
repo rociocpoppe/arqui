@@ -2,13 +2,9 @@ package entidades;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -18,7 +14,6 @@ import javax.persistence.Table;
 public class Estudiante{
 
     @Id
-    // @GeneratedValue(strategy=GenerationType.AUTO)
     private Long nroDni;
     @Column
     private String nombre;
@@ -35,8 +30,7 @@ public class Estudiante{
     @OneToMany( mappedBy = "estudiante",fetch = FetchType.LAZY)
     private List <Estudiante_Carrera> carreras;
     
-
-    
+   
     public Estudiante(Long nroDni, String nombre, String apellido,  String ciudadResidencia,int edad, String genero,
             int nroLibretaUniv) {
         this.nroDni = nroDni;
@@ -55,8 +49,6 @@ public class Estudiante{
         this.apellido = apellido;
         this.nroLibretaUniv = nroLibretaUniv;
     }
-
-
     
     public Estudiante(Long nroDni) {
         this.nroDni = nroDni;
