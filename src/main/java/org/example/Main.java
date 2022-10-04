@@ -34,15 +34,16 @@ public class Main {
             
            
             // cargar datos 
-            // carreraRepository.insertCarrera(parserCarreras);
-            // estudianteRepository.insertarEstudiante(parserEstudiante);
-            // estudiante_carreraRepository.insertarEstudianteCarrera(parserEstudianteCarrera);
+            carreraRepository.insertCarrera(parserCarreras);
+            estudianteRepository.insertarEstudiante(parserEstudiante);
+            estudiante_carreraRepository.insertarEstudianteCarrera(parserEstudianteCarrera);
             
             //CONSULTA A
             System.out.println(" ");
             System.out.println("************CONSULTA A*******************************************");
-            // Estudiante est=new Estudiante((long)40, "Juan", "Rodriguez", "Las Flores", 29, "m", 1900);
-            // estudianteRepository.saveEstudiante(est);
+            Estudiante es=new Estudiante((long)40, "Juan", "Rodriguez", "Las Flores", 29, "m", 1900);
+            estudianteRepository.saveEstudiante(es);
+            
 
             //CONSULTA B
             //matricular estudiante a una carrera

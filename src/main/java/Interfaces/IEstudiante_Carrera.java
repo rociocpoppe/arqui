@@ -11,7 +11,6 @@ public interface IEstudiante_Carrera {
 
     public void insertarEstudianteCarrera(CSVParser c);
     public void saveEstudianteCarrera(Estudiante_Carrera e);
-    //public List<Carrera> getCarrerasByInscriptos ();
     public void matricularEstudiante(Estudiante e, Carrera c);
     public List<Object[]> getReporte();
 }

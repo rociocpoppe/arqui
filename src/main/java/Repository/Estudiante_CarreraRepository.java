@@ -52,7 +52,6 @@ public class Estudiante_CarreraRepository implements IEstudiante_Carrera{
                 Long idCarrera= Long.parseLong(row.get("carrera"));
                 Carrera c= em.find(Carrera.class, idCarrera);
                 String dato=row.get("fechaInscripcion");
-                System.out.println(dato);
                 Timestamp inscripcion = Timestamp.valueOf(row.get("fechaInscripcion"));
                 Timestamp graduacion = null;
                 if(!row.get("fechaGraduacion").equals("NULL")) {

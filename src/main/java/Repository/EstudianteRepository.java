@@ -128,4 +128,9 @@ public class EstudianteRepository implements IEstudiante{
         em.getTransaction().commit();
         return estudiantesOrderCriterio;
     }
+
+    public Estudiante getEstudianteById(Long id){
+        Estudiante e=em.find(Estudiante.class,id);
+        return e;
+    }
 }

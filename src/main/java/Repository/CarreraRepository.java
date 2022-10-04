@@ -34,9 +34,7 @@ public class CarreraRepository implements ICarrera{
     public void insertCarrera(CSVParser carreras) {   
         for(CSVRecord row: carreras) {
 			String nombre = row.get("nombre");
-			System.out.println(row.get("nombre"));
             Long id=Long.parseLong(row.get("idCarrera"));
-            System.out.println("id " +id);
 			Carrera c = new Carrera(id,nombre);
 			try {  
                 em.getTransaction().begin();
